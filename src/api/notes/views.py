@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
-
 from src.models import db_helper, Note
+from . import crud
 from .deps import note_by_id
 from .schemas import NoteCreateSchema,NoteUpdateSchema
-from ..notes import crud
+
 
 
 router = APIRouter(tags=["Notes"])
