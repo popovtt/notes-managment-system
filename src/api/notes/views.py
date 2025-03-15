@@ -1,18 +1,56 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models import db_helper
+from src.models import db_helper, Note
+from .deps import note_by_id
+from .schemas import NoteCreateSchema,NoteUpdateSchema
 from ..notes import crud
 
 
 router = APIRouter(tags=["Notes"])
 
 
-@router.get("/notes")
+@router.get("/")
 async def get_notes(session: AsyncSession = Depends(db_helper.session_dependency)):
     return await crud.read_notes(session=session)
 
 
-@router.get("/hello")
-async def hello_notes():
-    return {"message": "Hello Notes"}
+@router.get("/{note_id}", summary="Get Note by ID")
+async def get_note_by_id(
+        note_id: int,
+        session: AsyncSession = Depends(db_helper.session_dependency)
+):
+    return await crud.read_note_by_id(note_id=note_id, session=session)
+
+
+@router.get("/title/")
+async def get_note_by_title(
+        note_title: str,
+        session: AsyncSession = Depends(db_helper.session_dependency)
+):
+    return await crud.read_note_by_title(session=session, title=note_title)
+
+
+@router.post("/")
+async def post_note(
+        note_in: NoteCreateSchema,
+        session: AsyncSession = Depends(db_helper.session_dependency),
+):
+    return await crud.create_note(note_in=note_in, session=session)
+
+
+@router.patch("/")
+async def patch_note(
+        note_in: NoteUpdateSchema,
+        note: Note = Depends(note_by_id),
+        session: AsyncSession = Depends(db_helper.session_dependency),
+):
+    return await crud.update_note(session=session, note=note, note_in=note_in)
+
+
+@router.delete("/")
+async def delete_note(
+        note: Note = Depends(note_by_id),
+        session: AsyncSession = Depends(db_helper.session_dependency),
+):
+    return await crud.delete_note(note=note, session=session)
