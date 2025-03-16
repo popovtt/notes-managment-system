@@ -6,7 +6,6 @@ from .deps import note_by_id
 from .schemas import NoteCreateSchema,NoteUpdateSchema
 
 
-
 router = APIRouter(tags=["Notes"])
 
 
@@ -31,7 +30,7 @@ async def get_note_by_title(
     return await crud.read_note_by_title(session=session, title=note_title)
 
 
-@router.post("/")
+@router.post("/", status_code=201)
 async def post_note(
         note_in: NoteCreateSchema,
         session: AsyncSession = Depends(db_helper.session_dependency),
@@ -48,7 +47,7 @@ async def patch_note(
     return await crud.update_note(session=session, note=note, note_in=note_in)
 
 
-@router.delete("/")
+@router.delete("/", status_code=204)
 async def delete_note(
         note: Note = Depends(note_by_id),
         session: AsyncSession = Depends(db_helper.session_dependency),
