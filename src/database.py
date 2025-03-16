@@ -18,6 +18,6 @@ class DatabaseHelper:
 
 
 db_helper = DatabaseHelper(
-    url=settings.db.DATABASE_URL_ASYNCPG,
-    echo=True,
+    url=settings.env.DATABASE_URL_ASYNCPG,
+    echo=False,
 )

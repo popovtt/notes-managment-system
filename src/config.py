@@ -1,16 +1,17 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+BASE_DIR = Path(__file__).parent.parent
+env_file = f"{BASE_DIR}/.env"
 
-env_file = f"{Path(__file__).parent.parent}/.env"
 
-
-class DBSettings(BaseSettings):
+class EnvSettings(BaseSettings):
     DB_NAME: str
     DB_USER: str
     DB_PASS: str
     DB_HOST: str
     DB_PORT: str
+    GEMINI_API_KEY: str
 
     @property
     def DATABASE_URL_ASYNCPG(self):
@@ -20,7 +21,7 @@ class DBSettings(BaseSettings):
 
 
 class Settings(BaseSettings):
-    db: DBSettings = DBSettings()
+    env: EnvSettings = EnvSettings()
 
 
 settings = Settings()
