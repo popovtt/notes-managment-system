@@ -11,7 +11,11 @@ class EnvSettings(BaseSettings):
     DB_PASS: str
     DB_HOST: str
     DB_PORT: str
-    GEMINI_API_KEY: str
+    GOOGLE_API_KEY: str
+
+    @property
+    def GEMINI_ENDPOINT(self) -> str:
+        return "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateText"
 
     @property
     def DATABASE_URL_ASYNCPG(self):
