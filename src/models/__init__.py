@@ -1,10 +1,10 @@
 __all__ = (
     "Base",
     "Note",
-    "created_at",
-    "updated_at",
     "db_helper",
     "NoteVersion",
+    "created_at",
+    "updated_at",
 )
 
 from ..database import db_helper
