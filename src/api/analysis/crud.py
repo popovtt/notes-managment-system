@@ -1,22 +1,12 @@
 import re
 import pandas as pd
-from fastapi import HTTPException
 from collections import Counter
-from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.models import Note
+from src.api.deps import notes_list
 
 
 async def analyze_notes(session: AsyncSession):
-    stmt = select(Note.title)
-    result = await session.execute(stmt)
-    notes = [row[0] for row in result.all()]
-
-    if not notes:
-        raise HTTPException(
-            status_code=404,
-            detail="No notes found"
-        )
+    notes = await notes_list(session)
 
     df = pd.DataFrame({"note": notes})
     df["word_count"] = df["note"].apply(lambda x: len(x.split()))

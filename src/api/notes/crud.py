@@ -1,3 +1,4 @@
+from fastapi import HTTPException
 from sqlalchemy import select,Sequence
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.api.notes.schemas import NoteCreateSchema, NoteUpdateSchema
@@ -15,13 +16,18 @@ async def read_notes(session: AsyncSession) -> Sequence[Note]:
 
 # Reads note by id
 async def read_note_by_id(session: AsyncSession, note_id: int) -> Note | None:
-    return await session.get(Note, note_id)
+    note = await session.get(Note, note_id)
+    if not note:
+        raise HTTPException(status_code=404,detail="Note not found")
+    return note
 
 
 async def read_note_by_title(session: AsyncSession, title: str) -> Note | None:
     stmt = select(Note).where(Note.title == title)
     res = await session.execute(stmt)
     note = res.scalar()
+    if not note:
+        raise HTTPException(status_code=404,detail="Note not found")
     return note
 
 

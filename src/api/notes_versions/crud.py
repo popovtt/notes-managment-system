@@ -26,11 +26,17 @@ async def create_last_version(session: AsyncSession, note: Note, note_in: NoteUp
     )
     res = await session.execute(stmt)
     last_version = res.scalar()
-    session.add(NoteVersion(title=note_in.title, note_id=note.id, version_id=last_version.version_id + 1))
+    session.add(NoteVersion(
+        title=note_in.title,
+        note_id=note.id,
+        version_id=last_version.version_id + 1,
+        created_at=note.created_at,
+        updated_at=note.updated_at,
+    ))
     await session.commit()
 
 
 async def create_note_version(session: AsyncSession, note: Note):
-    note_version = NoteVersion(title=note.title, note_id=note.id)
+    note_version = NoteVersion(title=note.title, note_id=note.id, created_at=note.created_at, updated_at=note.updated_at)
     session.add(note_version)
     await session.commit()
