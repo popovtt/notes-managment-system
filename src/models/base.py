@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Annotated
-from sqlalchemy import func
+from sqlalchemy import func, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, declared_attr
 
 
@@ -20,6 +20,7 @@ class Base(DeclarativeBase):
         server_default=func.now(),
         onupdate=datetime.now,
     )
+    summary: Mapped[str] = mapped_column(String, nullable=False)
 
     @declared_attr.directive
     def __tablename__(cls) -> str:
