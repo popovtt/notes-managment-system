@@ -56,6 +56,8 @@ async def update_note(session: AsyncSession, note: Note, note_in: NoteUpdateSche
 
 
 async def delete_note(session: AsyncSession, note: Note):
+    if not note:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Note not found")
     await session.delete(note)
     await session.commit()
     return {"msg": f"Note {note.id} deleted"}
