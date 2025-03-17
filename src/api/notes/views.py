@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.models import db_helper, Note
 from . import crud
@@ -30,7 +30,7 @@ async def get_note_by_title(
     return await crud.read_note_by_title(session=session, title=note_title)
 
 
-@router.post("/", status_code=201)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 async def post_note(
         note_in: NoteCreateSchema,
         session: AsyncSession = Depends(db_helper.session_dependency),
@@ -47,7 +47,7 @@ async def patch_note(
     return await crud.update_note(session=session, note=note, note_in=note_in)
 
 
-@router.delete("/", status_code=204)
+@router.delete("/", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_note(
         note: Note = Depends(note_by_id),
         session: AsyncSession = Depends(db_helper.session_dependency),
