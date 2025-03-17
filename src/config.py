@@ -1,6 +1,7 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 BASE_DIR = Path(__file__).parent.parent
 env_file = f"{BASE_DIR}/.env"
 

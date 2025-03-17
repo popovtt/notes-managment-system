@@ -1,5 +1,6 @@
 from sqlalchemy import select, func, Sequence
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from src.models import NoteVersion, Note
 from src.api.notes.schemas import NoteUpdateSchema
 
@@ -38,6 +39,12 @@ async def create_last_version(session: AsyncSession, note: Note, note_in: NoteUp
 
 
 async def create_note_version(session: AsyncSession, note: Note):
-    note_version = NoteVersion(title=note.title, note_id=note.id, created_at=note.created_at, updated_at=note.updated_at, summary=note.summary)
+    note_version = NoteVersion(
+        title=note.title,
+        note_id=note.id,
+        created_at=note.created_at,
+        updated_at=note.updated_at,
+        summary=note.summary
+    )
     session.add(note_version)
     await session.commit()

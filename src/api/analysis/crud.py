@@ -1,8 +1,10 @@
 import re
 import pandas as pd
+
 from collections import Counter
 from sqlalchemy.ext.asyncio import AsyncSession
-from src.api.deps import notes_list
+
+from src.api.utils import notes_list
 
 
 async def analyze_notes(session: AsyncSession):

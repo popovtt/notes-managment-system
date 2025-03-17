@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status
-from sqlalchemy import select,Sequence
+from sqlalchemy import select, Sequence
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.api.ai.crud import summarize

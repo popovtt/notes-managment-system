@@ -1,4 +1,5 @@
 import pytest
+
 from httpx import AsyncClient, ASGITransport
 
 from src.main import app
@@ -16,7 +17,6 @@ class TestNotesViews:
             assert response.status_code == 200
             assert len(data) == 4
 
-
     @pytest.mark.asyncio
     @pytest.mark.parametrize(
         "id, res",
@@ -33,4 +33,3 @@ class TestNotesViews:
             response = await async_client.get(f"/api/v1/notes/{id}")
             data = response.json()
             assert data == res
-

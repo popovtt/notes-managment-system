@@ -1,4 +1,5 @@
 from fastapi import APIRouter
+
 from .notes.views import router as notes_router
 from .notes_versions.views import router as versions_router
 from .analysis.views import router as analysis_router
