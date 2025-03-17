@@ -3,7 +3,7 @@
 ## Table of Contents
 
 ---
-
+- [Project Structure](#project-structure)
 - [Versions](#versions)
 - [Requirements](#requirements)
     - [Main Env Setup](#env-setup)
@@ -11,9 +11,58 @@
 - [Local Development Server](#local-development-server)
 - [Copyright](#copyright)
 
+## Project Structure
+
+---
+
+```text
+fastapi-project
+├── alembic/
+├── src
+│   ├── api
+│   │   ├── ai
+│   │   │   ├── __init__.py
+│   │   │   └── crud.py
+│   │   ├── analysis
+│   │   │   ├── __init__.py
+│   │   │   ├── crud.py
+│   │   │   └── views.py
+│   │   ├── notes
+│   │   │   ├── __init__.py
+│   │   │   ├── crud.py
+│   │   │   ├── deps.py
+│   │   │   ├── schemas.py
+│   │   │   └── views.py
+│   │   ├── notes_versions
+│   │   │   ├── __init__.py
+│   │   │   ├── crud.py
+│   │   │   └── views.py
+│   └── models
+│   │   ├── __init__.py  
+│   │   ├── base.py
+│   │   ├── note.py
+│   │   ├── note_version.py
+│   ├── config.py  # global configs
+│   ├── database.py  # db connection related stuff
+│   └── main.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_main.http
+│   └── test_notes.py
+├── .env
+├── .test.env
+├── .gitignore
+├── alembic.ini
+├── pytest.ini
+├── README.md
+└── requirements.txt
+```
 ## Versions
 
 ---
+
+
+
 [Python](https://www.python.org): **3.13**
 
 [FastAPI Framework](https://github.com/fastapi/fastapi): **0.115.11**
